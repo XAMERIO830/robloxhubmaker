@@ -1,0 +1,514 @@
+🇧​​​​​🇴​​​​​🇴​​​​​🇸​​​​​🇹​​​​​🇮​​​​​🇳​​​​​🇬​​​​​ 🇹​​​​​🇭​​​​​🇪​​​​​ 🇱​​​​​🇮​​​​​🇧​​​​​🇦​​​​​🇷​​​​​🇾​​​​​ iff u want
+loadstring(game:HttpGet("https://raw.githubusercontent.com/YourUsername/YourRepoName/main/xameriolib.lua2"))()
+🇨​​​​​🇷​​​​​🇪​​​​​🇦​​​​​🇹​​​​​🇪​​​​​🇮​​​​​🇳​​​​​🇬​​​​​ 🇦​​​​​ 🇼​​​​​🇮​​​​​🇳​​​​​🇩​​​​​🇴​​​​​🇼​​​​​ 🇬​​​​​🇺​​​​​🇮​​​​​ andd makeing hole gui
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Create ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "XamerioLib"
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 350, 0, 320)
+MainFrame.Position = UDim2.new(0.1, 0, 0.25, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = ScreenGui
+MainFrame.Active = true
+
+-- Dragging vars
+local dragging, dragInput, dragStart, startPos
+
+MainFrame.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startPos = MainFrame.Position
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+MainFrame.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement then
+		dragInput = input
+	end
+end)
+
+RunService.RenderStepped:Connect(function()
+	if dragging and dragInput then
+		local delta = dragInput.Position - dragStart
+		MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
+
+-- Title Bar
+local TitleBar = Instance.new("Frame")
+TitleBar.Size = UDim2.new(1, 0, 0, 30)
+TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TitleBar.Parent = MainFrame
+
+local TitleText = Instance.new("TextLabel")
+TitleText.Size = UDim2.new(1, -40, 1, 0)
+TitleText.Position = UDim2.new(0, 10, 0, 0)
+TitleText.BackgroundTransparency = 1
+TitleText.Font = Enum.Font.GothamBold
+TitleText.TextSize = 16
+TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleText.Text = "House Obby to get Admin"
+TitleText.TextXAlignment = Enum.TextXAlignment.Left
+TitleText.Parent = TitleBar
+
+local ExitButton = Instance.new("TextButton")
+ExitButton.Size = UDim2.new(0, 30, 1, 0)
+ExitButton.Position = UDim2.new(1, -30, 0, 0)
+ExitButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+ExitButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+ExitButton.Font = Enum.Font.GothamBold
+ExitButton.TextSize = 18
+ExitButton.Text = "X"
+ExitButton.Parent = TitleBar
+
+-- Warning Frame
+local WarningFrame = Instance.new("Frame")
+WarningFrame.Size = UDim2.new(0, 280, 0, 130)
+WarningFrame.Position = UDim2.new(0.5, -140, 0.5, -65)
+WarningFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+WarningFrame.Visible = false
+WarningFrame.ZIndex = 10
+WarningFrame.AnchorPoint = Vector2.new(0, 0)
+WarningFrame.Parent = MainFrame
+
+local WarningText = Instance.new("TextLabel")
+WarningText.Size = UDim2.new(1, -20, 0, 70)
+WarningText.Position = UDim2.new(0, 10, 0, 10)
+WarningText.BackgroundTransparency = 1
+WarningText.Font = Enum.Font.GothamBold
+WarningText.TextSize = 18
+WarningText.TextColor3 = Color3.fromRGB(255, 255, 255)
+WarningText.Text = "Hello, are you sure you want to Exit the GUI?"
+WarningText.TextWrapped = true
+WarningText.TextXAlignment = Enum.TextXAlignment.Center
+WarningText.Parent = WarningFrame
+
+local YesButton = Instance.new("TextButton")
+YesButton.Size = UDim2.new(0, 100, 0, 35)
+YesButton.Position = UDim2.new(0.15, 0, 1, -45)
+YesButton.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
+YesButton.Font = Enum.Font.GothamBold
+YesButton.TextSize = 18
+YesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+YesButton.Text = "Yes"
+YesButton.Parent = WarningFrame
+
+local NoButton = Instance.new("TextButton")
+NoButton.Size = UDim2.new(0, 100, 0, 35)
+NoButton.Position = UDim2.new(0.65, 0, 1, -45)
+NoButton.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
+NoButton.Font = Enum.Font.GothamBold
+NoButton.TextSize = 18
+NoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+NoButton.Text = "No"
+NoButton.Parent = WarningFrame
+
+-- Tabs Frame
+local TabsFrame = Instance.new("Frame")
+TabsFrame.Size = UDim2.new(0, 100, 1, -30)
+TabsFrame.Position = UDim2.new(0, 0, 0, 30)
+TabsFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TabsFrame.Parent = MainFrame
+
+local PagesFrame = Instance.new("Frame")
+PagesFrame.Size = UDim2.new(1, -100, 1, -30)
+PagesFrame.Position = UDim2.new(0, 100, 0, 30)
+PagesFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+PagesFrame.Parent = MainFrame
+
+-- Utility: Create Tab Button
+local function createTabButton(name, y)
+	local btn = Instance.new("TextButton")
+	btn.Name = name .. "TabBtn"
+	btn.Size = UDim2.new(1, -10, 0, 30)
+	btn.Position = UDim2.new(0, 5, 0, y)
+	btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	btn.Text = name
+	btn.Font = Enum.Font.GothamBold
+	btn.TextSize = 16
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btn.Parent = TabsFrame
+	
+	local uic = Instance.new("UICorner", btn)
+	uic.CornerRadius = UDim.new(0, 5)
+	
+	return btn
+end
+
+-- Create Pages
+local MainPage = Instance.new("Frame")
+MainPage.Size = UDim2.new(1, 0, 1, 0)
+MainPage.BackgroundTransparency = 1
+MainPage.Parent = PagesFrame
+MainPage.Visible = true
+
+local NewsPage = Instance.new("Frame")
+NewsPage.Size = UDim2.new(1, 0, 1, 0)
+NewsPage.BackgroundTransparency = 1
+NewsPage.Parent = PagesFrame
+NewsPage.Visible = false
+
+-- News Page Label
+local newsLabel = Instance.new("TextLabel")
+newsLabel.Size = UDim2.new(1, 0, 1, 0)
+newsLabel.BackgroundTransparency = 1
+newsLabel.Text = "Coming soon..."
+newsLabel.Font = Enum.Font.GothamBold
+newsLabel.TextSize = 20
+newsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+newsLabel.TextWrapped = true
+newsLabel.TextXAlignment = Enum.TextXAlignment.Center
+newsLabel.TextYAlignment = Enum.TextYAlignment.Center
+newsLabel.Parent = NewsPage
+
+-- Tabs Buttons
+local MainTabBtn = createTabButton("Main", 10)
+local NewsTabBtn = createTabButton("News", 50)
+
+-- Tab switch function
+local function switchTab(tabName)
+	if tabName == "Main" then
+		MainPage.Visible = true
+		NewsPage.Visible = false
+		MainTabBtn.BackgroundColor3 = Color3.fromRGB(70,70,70)
+		NewsTabBtn.BackgroundColor3 = Color3.fromRGB(50,50,50)
+	elseif tabName == "News" then
+		MainPage.Visible = false
+		NewsPage.Visible = true
+		MainTabBtn.BackgroundColor3 = Color3.fromRGB(50,50,50)
+		NewsTabBtn.BackgroundColor3 = Color3.fromRGB(70,70,70)
+	end
+end
+
+MainTabBtn.MouseButton1Click:Connect(function()
+	switchTab("Main")
+end)
+
+NewsTabBtn.MouseButton1Click:Connect(function()
+	switchTab("News")
+end)
+
+-- Initialize with Main tab selected
+switchTab("Main")
+
+-- Utility: Create Slider UI
+local function createSlider(parent, labelText, min, max, default, posY, onChange)
+	local frame = Instance.new("Frame")
+	frame.Size = UDim2.new(0, 300, 0, 50)
+	frame.Position = UDim2.new(0, 20, 0, posY)
+	frame.BackgroundTransparency = 1
+	frame.Parent = parent
+	
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(0, 150, 0, 20)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.GothamBold
+	label.TextSize = 14
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.Text = labelText .. ": " .. tostring(default)
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.Parent = frame
+	
+	local sliderBG = Instance.new("Frame")
+	sliderBG.Size = UDim2.new(1, 0, 0, 15)
+	sliderBG.Position = UDim2.new(0, 0, 0, 30)
+	sliderBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	sliderBG.Parent = frame
+	local bgUICorner = Instance.new("UICorner")
+	bgUICorner.CornerRadius = UDim.new(0, 5)
+	bgUICorner.Parent = sliderBG
+	
+	local sliderFill = Instance.new("Frame")
+	sliderFill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0)
+	sliderFill.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
+	sliderFill.Parent = sliderBG
+	local fillUICorner = Instance.new("UICorner")
+	fillUICorner.CornerRadius = UDim.new(0, 5)
+	fillUICorner.Parent = sliderFill
+	
+	local sliderBtn = Instance.new("ImageButton")
+	sliderBtn.Size = UDim2.new(0, 20, 0, 20)
+	sliderBtn.Position = UDim2.new(sliderFill.Size.X.Scale, -10, 0, -3)
+	sliderBtn.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+	sliderBtn.BorderSizePixel = 0
+	sliderBtn.Parent = sliderBG
+	sliderBtn.AutoButtonColor = false
+	sliderBtn.Image = ""
+	
+	local draggingSlider = false
+	
+	local function updateSlider(inputPosX)
+		local relativeX = math.clamp(inputPosX - sliderBG.AbsolutePosition.X, 0, sliderBG.AbsoluteSize.X)
+		local scale = relativeX / sliderBG.AbsoluteSize.X
+		sliderFill.Size = UDim2.new(scale, 0, 1, 0)
+		sliderBtn.Position = UDim2.new(scale, -10, 0, -3)
+		local value = math.floor(min + (max - min) * scale)
+		label.Text = labelText .. ": " .. tostring(value)
+		if onChange then
+			onChange(value)
+		end
+	end
+	
+	sliderBtn.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			draggingSlider = true
+		end
+	end)
+	
+	sliderBtn.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			draggingSlider = false
+		end
+	end)
+	
+	UIS.InputChanged:Connect(function(input)
+		if draggingSlider and input.UserInputType == Enum.UserInputType.MouseMovement then
+			updateSlider(input.Position.X)
+		end
+	end)
+	
+	sliderBG.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			updateSlider(input.Position.X)
+		end
+	end)
+	
+	return frame
+end
+
+-- FE WalkSpeed changer
+local function setWalkSpeed(speed)
+	local char = player.Character
+	if char then
+		local hum = char:FindFirstChildOfClass("Humanoid")
+		if hum then
+			hum.WalkSpeed = speed
+		end
+	end
+end
+
+-- FE JumpPower changer
+local function setJumpPower(power)
+	local char = player.Character
+	if char then
+		local hum = char:FindFirstChildOfClass("Humanoid")
+		if hum then
+			hum.JumpPower = power
+		end
+	end
+end
+
+-- Create WalkSpeed slider
+local WalkSpeedSlider = createSlider(MainPage, "WalkSpeed", 8, 200, 16, 10, function(value)
+	setWalkSpeed(value)
+end)
+
+-- Create JumpPower slider
+local JumpPowerSlider = createSlider(MainPage, "JumpPower", 10, 150, 50, 70, function(value)
+	setJumpPower(value)
+end)
+
+-- Infinite Jump Toggle
+local InfJumpEnabled = false
+
+local InfJumpButton = Instance.new("TextButton")
+InfJumpButton.Size = UDim2.new(0, 150, 0, 30)
+InfJumpButton.Position = UDim2.new(0, 20, 0, 130)
+InfJumpButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+InfJumpButton.Font = Enum.Font.GothamBold
+InfJumpButton.TextSize = 16
+InfJumpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfJumpButton.Text = "Infinite Jump: OFF"
+InfJumpButton.Parent = MainPage
+
+local function onInfJumpRequest()
+	if InfJumpEnabled then
+		local char = player.Character
+		if char then
+			local hum = char:FindFirstChildOfClass("Humanoid")
+			if hum and hum:GetState() == Enum.HumanoidStateType.Freefall then
+				hum:ChangeState(Enum.HumanoidStateType.Jumping)
+			end
+		end
+	end
+end
+
+UIS.JumpRequest:Connect(onInfJumpRequest)
+
+InfJumpButton.MouseButton1Click:Connect(function()
+	InfJumpEnabled = not InfJumpEnabled
+	if InfJumpEnabled then
+		InfJumpButton.Text = "Infinite Jump: ON"
+	else
+		InfJumpButton.Text = "Infinite Jump: OFF"
+	end
+end)
+
+-- Noclip Toggle
+local NoclipEnabled = false
+
+local NoclipButton = Instance.new("TextButton")
+NoclipButton.Size = UDim2.new(0, 150, 0, 30)
+NoclipButton.Position = UDim2.new(0, 20, 0, 170)
+NoclipButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+NoclipButton.Font = Enum.Font.GothamBold
+NoclipButton.TextSize = 16
+NoclipButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+NoclipButton.Text = "Noclip: OFF"
+NoclipButton.Parent = MainPage
+
+local function runNoclip()
+	local char = player.Character
+	if char and NoclipEnabled then
+		for _, part in pairs(char:GetDescendants()) do
+			if part:IsA("BasePart") and part.CanCollide == true then
+				part.CanCollide = false
+			end
+		end
+	end
+end
+
+NoclipButton.MouseButton1Click:Connect(function()
+	NoclipEnabled = not NoclipEnabled
+	if NoclipEnabled then
+		NoclipButton.Text = "Noclip: ON"
+	else
+		NoclipButton.Text = "Noclip: OFF"
+		-- Restore collisions
+		local char = player.Character
+		if char then
+			for _, part in pairs(char:GetDescendants()) do
+				if part:IsA("BasePart") then
+					part.CanCollide = true
+				end
+			end
+		end
+	end
+end)
+
+RunService.Stepped:Connect(function()
+	if NoclipEnabled then
+		runNoclip()
+	end
+end)
+
+-- ESP Toggle
+local ESPEnabled = false
+
+local ESPButton = Instance.new("TextButton")
+ESPButton.Size = UDim2.new(0, 150, 0, 30)
+ESPButton.Position = UDim2.new(0, 20, 0, 210)
+ESPButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ESPButton.Font = Enum.Font.GothamBold
+ESPButton.TextSize = 16
+ESPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ESPButton.Text = "ESP: OFF"
+ESPButton.Parent = MainPage
+
+local ESPHighlights = {}
+
+local function createESPForPlayer(targetPlayer)
+	if targetPlayer == player then return end
+	local char = targetPlayer.Character
+	if char then
+		local highlight = Instance.new("Highlight")
+		highlight.Name = "ESPHighlight"
+		highlight.FillColor = Color3.fromRGB(255, 0, 0)
+		highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+		highlight.Parent = char
+		ESPHighlights[targetPlayer.Name] = highlight
+	end
+end
+
+local function removeESPForPlayer(targetPlayer)
+	local highlight = ESPHighlights[targetPlayer.Name]
+	if highlight then
+		highlight:Destroy()
+		ESPHighlights[targetPlayer.Name] = nil
+	end
+end
+
+local function updateESP(enabled)
+	if enabled then
+		for _, p in pairs(Players:GetPlayers()) do
+			createESPForPlayer(p)
+		end
+	else
+		for _, highlight in pairs(ESPHighlights) do
+			if highlight then highlight:Destroy() end
+		end
+		ESPHighlights = {}
+	end
+end
+
+ESPButton.MouseButton1Click:Connect(function()
+	ESPEnabled = not ESPEnabled
+	if ESPEnabled then
+		ESPButton.Text = "ESP: ON"
+	else
+		ESPButton.Text = "ESP: OFF"
+	end
+	updateESP(ESPEnabled)
+end)
+
+Players.PlayerAdded:Connect(function(newPlayer)
+	if ESPEnabled then
+		createESPForPlayer(newPlayer)
+	end
+end)
+
+Players.PlayerRemoving:Connect(function(leavingPlayer)
+	removeESPForPlayer(leavingPlayer)
+end)
+
+-- Exit Button Functionality
+ExitButton.MouseButton1Click:Connect(function()
+	WarningFrame.Visible = true
+end)
+
+YesButton.MouseButton1Click:Connect(function()
+	ScreenGui:Destroy()
+end)
+
+NoButton.MouseButton1Click:Connect(function()
+	WarningFrame.Visible = false
+end)
+
+-- Welcome Note
+local WelcomeNote = Instance.new("TextLabel")
+WelcomeNote.Size = UDim2.new(0, 300, 0, 40)
+WelcomeNote.Position = UDim2.new(0.5, -150, 0, 10)
+WelcomeNote.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+WelcomeNote.TextColor3 = Color3.new(1, 1, 1)
+WelcomeNote.Font = Enum.Font.GothamBold
+WelcomeNote.TextSize = 18
+WelcomeNote.Text = "Hello welcome hacker enjoy"
+WelcomeNote.TextWrapped = true
+WelcomeNote.Parent = MainFrame
+WelcomeNote.ZIndex = 15
+
+task.delay(3, function()
+	if WelcomeNote then
+		WelcomeNote:Destroy()
+	end
+end)
+
